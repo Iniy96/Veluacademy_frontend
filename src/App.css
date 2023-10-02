@@ -1,0 +1,16 @@
+/* HomeCarousel.css */
+.carousel-inner img {
+    max-height: 500px; /* Also change the height of carousel in homecarousel.jsx*/
+    width: auto; /* Maintain the aspect ratio */
+    object-fit: cover;
+    position: relative;
+}
+
+.carousel-inner .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Black overlay with 50% opacity */
+}
