@@ -8,7 +8,7 @@ import { UserCredentialContextProvider, UserCredentialsContext } from './context
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <UserCredentialContextProvider>
-    <App />
+    <App/>
     </UserCredentialContextProvider>
   </React.StrictMode>,
 )

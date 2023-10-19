@@ -30,7 +30,7 @@ const Navbar = () => {
                                 <Link className="nav-link active" aria-current="page" to={"/"} >Home</Link>
                             </li>
                             <li className="nav-item">
-                                <Link className="nav-link" to={"/test"}>Test</Link>
+                                <HashLink className="nav-link" to={"/test#test"}>Test</HashLink>
                             </li>
                             <li className="nav-item">
                                 <HashLink className="nav-link" to={"/#shop"}>Shop</HashLink>

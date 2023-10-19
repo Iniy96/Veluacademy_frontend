@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { fileupload } from '../../services/Admin APIs/admintestAPI';
 import toast, { Toaster } from 'react-hot-toast';
+import { UserCredentialsContext } from '../../context-API/UserCredentialsContext';
 
 export const AdminFileHandle = () => {
+
+    const { setisAdminLoggedIn} = useContext(UserCredentialsContext)
 
     const [file, setFile] = useState(null);
     const [error, setError] = useState('');
@@ -32,9 +35,17 @@ export const AdminFileHandle = () => {
         }
     };
 
+    const handleLogout =()=>{
+        localStorage.removeItem('admincredentials');
+        setisAdminLoggedIn(null)
+    }
+
     return (
         <>
          <Toaster />
+         <div>
+            <button className='btn btn-dark' onClick={handleLogout}>Logout</button>
+         </div>
             <form onSubmit={handleSubmit} className='mt-3 mx-auto col col-md-8 col-lg-6 border rounded p-3 d-flex flex-column gap-3'>
                 <label htmlFor="file" className='pe-5'>Upload File:</label>
                 <input

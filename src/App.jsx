@@ -16,7 +16,9 @@ import { TestPage } from './Pages/TestPage/TestPage'
 import { tokenValidation } from './services/User APIs/authenticationApi'
 import { AdminHome } from './Pages/AdminPage/AdminHome'
 import { QuestionTable } from './Pages/AdminPage/QuestionTable'
-import { adminTokenValidation, getTokenFromLocalStorage } from './services/Admin APIs/adminAuthAPI'
+import { getAdminTokenFromLocalStorage, setAdminTokeToLocalStorage } from './utilities/AdminAPIUtilities'
+import { tokenValidationOnRefresh } from './services/Admin APIs/adminAuthAPI'
+import { TestPage2 } from './Pages/TestPage/TestPage2'
 
 function App() {
 
@@ -67,7 +69,7 @@ function App() {
                 <Route path='/' element={<Home />} />
                 <Route path="/cartPage" element={<CartPage />} />
                 <Route path="/checkout" element={<CheckoutPage />} />
-                <Route path="/test" element={<TestPage />} />
+                <Route path="/test" element={<TestPage2 />} />
               </>
             ) : (
               <>
@@ -96,18 +98,16 @@ function AdminLayout() {
 
   const handleAdminPageRefresh = async () => {
     // Check if user credentials exist in localStorage
-
-    const adminCredentialsString =await getTokenFromLocalStorage();
+    const adminCredentialsString =await getAdminTokenFromLocalStorage(); 
 
     if (adminCredentialsString) {
-      const result = await adminTokenValidation()
+      const result = await tokenValidationOnRefresh()
       if (result.status === 200) {
         const adminCredentials = {
-          email: result?.data?.adminemail,
+          email: result?.data?.email,
           token: result?.data?.Newtoken
         };
-        console.log("Admin Credentials",adminCredentials);
-        localStorage.setItem('AdminCredentials', JSON.stringify(adminCredentials));
+        setAdminTokeToLocalStorage(adminCredentials)
         setisAdminLoggedIn(adminCredentials);
       } else {
         localStorage.removeItem('AdminCredentials');

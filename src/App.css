@@ -14,3 +14,18 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5); /* Black overlay with 50% opacity */
 }
+
+iframe 
+{
+  overflow-x:hidden;
+  overflow-Y:hidden;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+}
+
+
+
+

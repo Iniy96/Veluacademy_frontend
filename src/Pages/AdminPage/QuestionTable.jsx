@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { getQuestionTableData } from '../../services/Admin APIs/admintestAPI'
 import toast, { Toaster } from 'react-hot-toast';
+import { QuestionEditModal } from './QuestionEditModal';
+import Button from 'react-bootstrap/Button';
 
 
 export const QuestionTable = () => {
 
     const [QuestionsData, setQuestionsData] = useState(null)
+    const [selectedQuestion, setSelectedQuestion] = useState(null);
+    const [show, setShow] = useState(false);
 
     const getdata = async () => {
         const { data, status } = await getQuestionTableData()
@@ -19,7 +23,12 @@ export const QuestionTable = () => {
     useEffect(() => {
         getdata()
     }, [])
-    
+
+    const handleShow =(que)=>{
+        setShow(true)
+        setSelectedQuestion(que)
+    }
+    const handleClose = () => setShow(false);
 
     return (
         <>
@@ -43,10 +52,10 @@ export const QuestionTable = () => {
                     </thead>
                     <tbody>
                         {
-                            QuestionsData?.map((que,index) => {
+                            QuestionsData?.map((que, index) => {
                                 return (
                                     <tr key={que.questionID}>
-                                        <th scope="row">{index+1}</th>
+                                        <th scope="row">{index + 1}</th>
                                         <td>{que.question}</td>
                                         <td>{que.answer}</td>
                                         <td>{que.option_1}</td>
@@ -55,17 +64,22 @@ export const QuestionTable = () => {
                                         <td>{que.option_4}</td>
                                         <td>{que.testID}</td>
                                         <td className='d-flex justify-content-center'>
-                                            <button className='btn btn-warning me-2'>Edit</button>
-                                            <button className='btn btn-danger'>Del</button>
+
+                                            <Button variant="primary" onClick={()=>handleShow(que)}>
+                                                Edit
+                                            </Button>
+
+                                            <button className='btn btn-danger ms-3'>Del</button>
                                         </td>
                                     </tr>
-                                   
+
                                 )
                             })
                         }
                     </tbody>
                 </table>
-            </div>
+            </div >
+            <QuestionEditModal show={show} que={selectedQuestion} handleClose={handleClose} />
         </>
     )
 }

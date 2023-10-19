@@ -5,6 +5,7 @@ import { json, useNavigate } from 'react-router-dom';
 import { adminLogin } from "../../services/Admin APIs/adminAuthAPI"
 import { UserCredentialsContext } from '../../context-API/UserCredentialsContext';
 import toast, { Toaster } from 'react-hot-toast';
+import { setAdminTokeToLocalStorage } from '../../utilities/AdminAPIUtilities';
 
 
 export const AdminLogin = () => {
@@ -21,11 +22,11 @@ export const AdminLogin = () => {
 
     if (result.status === 200) {
       const adminCredentials = {
-        email: result?.data?.adminEmail,
+        email: result?.data?.email,
         token: result?.data?.token
       };
       setisAdminLoggedIn(adminCredentials.email)
-      localStorage.setItem('AdminCredentials', JSON.stringify(adminCredentials));
+      setAdminTokeToLocalStorage(adminCredentials)
       formik.resetForm()
       navigate("/admin")
     } else {
